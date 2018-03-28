@@ -4,13 +4,11 @@ import (
 	"os"
 	"log"
 	"bytes"
-	"io"
 	"io/ioutil"
 	"bufio"
 	"encoding/json"
 	"net/http"
 	"github.com/joho/godotenv"
-	"golang.org/x/text/transform"
 )
 
 var APIKEY string
@@ -45,14 +43,6 @@ type CodicRes struct {
 	Words []CodicWords `json:"words"`
 }
 
-func transformEncoding( rawReader io.Reader, trans transform.Transformer) (string, error) {
-    ret, err := ioutil.ReadAll(transform.NewReader(rawReader, trans))
-    if err == nil {
-        return string(ret), nil
-    } else {
-        return "", err
-    }
-}
 
 func codic(text string) (*[]CodicRes, error){
 	client := &http.Client{}
